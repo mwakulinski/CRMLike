@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "serve": "node ./dist/src/main",
+    "start": "node ./dist/src/main",
     "dev": "npx nodemon ./src/main.ts",
     "build": "tsc",
     "test": "jest"
