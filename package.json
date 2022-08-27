@@ -2,7 +2,7 @@
   "name": "crmlike",
   "version": "0.0.1",
   "description": "crm app",
-  "main": "main.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "serve": "node ./dist/src/main",
     "start": "node ./dist/src/main",
