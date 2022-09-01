@@ -18,4 +18,8 @@ export class EmployeeService {
     this.counter++;
     return newEmployee.id;
   }
+
+  async getAllEmployees() {
+    return this.employees;
+  }
 }
