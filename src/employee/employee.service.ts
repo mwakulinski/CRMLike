@@ -22,4 +22,8 @@ export class EmployeeService {
   async getAllEmployees() {
     return this.employees;
   }
+
+  async getEmployeeById(id: number) {
+    return this.employees.find((employee) => employee.id === id);
+  }
 }
