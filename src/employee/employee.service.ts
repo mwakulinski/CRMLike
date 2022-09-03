@@ -1,6 +1,6 @@
 import { IEmployee, IEmployeeCreate } from "./interfaces";
 
-export class EmployeeService {
+class EmployeeService {
   public counter = 1;
   private employees: IEmployee[] = [
     {
@@ -27,3 +27,5 @@ export class EmployeeService {
     return this.employees.find((employee) => employee.id === id);
   }
 }
+
+export default EmployeeService;
