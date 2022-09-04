@@ -2,15 +2,20 @@ import express, { Application } from "express";
 import { IController } from "./interfaces/controller.interface";
 
 class App {
-  private app: Application = express();
+  private app: Application;
   constructor(private controllers: IController[], private port: number) {
-    this.initializeControllers(this.controllers);
-    this.app.use(express.json());
+    this.app = express();
+    this.initializeMiddlewares(this.app);
+    this.initializeControllers(this.app, this.controllers);
   }
 
-  private initializeControllers(controllers: IController[]) {
+  private initializeMiddlewares(app: Application) {
+    app.use(express.json());
+  }
+
+  private initializeControllers(app: Application, controllers: IController[]) {
     controllers.forEach((controller) => {
-      this.app.use("/api", controller.router);
+      app.use("/api", controller.router);
     });
   }
 
