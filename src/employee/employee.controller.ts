@@ -1,7 +1,9 @@
 import { NextFunction, Router, Request, Response } from "express";
 import { IController } from "../interfaces/controller.interface";
+import validationMiddleware from "../middlewares/validation.middleware";
 import EmployeeService from "./employee.service";
 import { IEmployeeCreate } from "./interfaces";
+import validate from "./employee.validation";
 
 class EmployeeController implements IController {
   constructor(
@@ -15,7 +17,11 @@ class EmployeeController implements IController {
   private initializeRoutes() {
     this.router.get(this.path, this.getAllEmployees);
     this.router.get(`${this.path}/:id`, this.getEmployeeById);
-    this.router.post(this.path, this.createNewEmployee);
+    this.router.post(
+      this.path,
+      validationMiddleware(validate.employeeCreate),
+      this.createNewEmployee
+    );
   }
 
   getAllEmployees = async (req: Request, res: Response, next: NextFunction) => {
