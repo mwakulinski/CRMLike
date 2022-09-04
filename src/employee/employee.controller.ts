@@ -14,12 +14,19 @@ class EmployeeController implements IController {
 
   private initializeRoutes() {
     this.router.get(this.path, this.getAllEmployees);
+    this.router.get(`${this.path}/:id`, this.getEmployeeById);
     this.router.post(this.path, this.createNewEmployee);
   }
 
   getAllEmployees = async (req: Request, res: Response, next: NextFunction) => {
     const employees = await this.employeeService.getAllEmployees();
     return res.status(200).send({ employees });
+  };
+
+  getEmployeeById = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const employee = await this.employeeService.getEmployeeById(Number(id));
+    return res.status(200).json(employee);
   };
 
   createNewEmployee = async (
