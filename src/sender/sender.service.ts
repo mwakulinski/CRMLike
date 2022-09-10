@@ -1,5 +1,9 @@
 import { IInvoice } from "../interfaces/invoice.interface";
 
+export interface ISenderService {
+  informAboutNewInvoice: (invoice: IInvoice) => Promise<void>;
+}
+
 class SenderService {
   async informAboutNewInvoice(invoice: IInvoice) {
     console.log(
