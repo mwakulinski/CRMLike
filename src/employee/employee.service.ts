@@ -1,7 +1,13 @@
 import { IEmployee, IEmployeeCreate } from "./interfaces";
 
-class EmployeeService {
-  public counter = 1;
+export interface IEmployeeService {
+  createEmployee: (employee: IEmployeeCreate) => Promise<number>;
+  getAllEmployees: () => Promise<IEmployee[]>;
+  getEmployeeById: (id: number) => Promise<IEmployee | undefined>;
+}
+
+class EmployeeService implements IEmployeeService {
+  private counter = 1;
   private employees: IEmployee[] = [
     {
       id: 0,
