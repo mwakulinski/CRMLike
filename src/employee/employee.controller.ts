@@ -1,16 +1,19 @@
 import { NextFunction, Router, Request, Response } from "express";
 import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
-import EmployeeService from "./employee.service";
+import EmployeeService, { IEmployeeService } from "./employee.service";
 import { IEmployeeCreate } from "./interfaces";
 import validate from "./employee.validation";
+import { IServices } from "..";
 
 class EmployeeController implements IController {
+  private readonly employeesServices: IEmployeeService;
   constructor(
-    private employeeService: EmployeeService,
+    { employeesService }: IServices,
     public path: string = "/employees",
     public router: Router = Router()
   ) {
+    this.employeesServices = employeesService;
     this.initializeRoutes();
   }
 
@@ -25,13 +28,13 @@ class EmployeeController implements IController {
   }
 
   getAllEmployees = async (req: Request, res: Response, next: NextFunction) => {
-    const employees = await this.employeeService.getAllEmployees();
+    const employees = await this.employeesServices.getAllEmployees();
     return res.status(200).send({ employees });
   };
 
   getEmployeeById = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const employee = await this.employeeService.getEmployeeById(Number(id));
+    const employee = await this.employeesServices.getEmployeeById(Number(id));
     return res.status(200).json(employee);
   };
 
@@ -41,7 +44,7 @@ class EmployeeController implements IController {
     next: NextFunction
   ) => {
     const employeeCreateDto: IEmployeeCreate = req.body;
-    const newEmployeeID = await this.employeeService.createEmployee(
+    const newEmployeeID = await this.employeesServices.createEmployee(
       employeeCreateDto
     );
     return res.status(201).json({ id: newEmployeeID });
