@@ -1,4 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
+import { IServices } from "..";
 import { IController } from "../interfaces/controller.interface";
 import { IFileToUpload } from "../interfaces/file.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
@@ -6,11 +7,13 @@ import FilesUploaderService from "./uploader.service";
 import validate from "./uploader.validation";
 
 class FilesUploaderController implements IController {
+  private readonly filesUploaderService;
   constructor(
-    private filesUploaderService: FilesUploaderService,
+    { filesService: fileService }: IServices,
     public path: string = "/upload",
     public router: Router = Router()
   ) {
+    this.filesUploaderService = fileService;
     this.initializeRoutes();
   }
 
