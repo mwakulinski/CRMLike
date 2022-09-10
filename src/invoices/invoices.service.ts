@@ -1,6 +1,10 @@
 import { IUploadedInvoice } from "../interfaces/invoice.interface";
 
-class InvoiceService {
+export interface IInvoicesService {
+  saveNewInvoiceInformation: (invoice: IUploadedInvoice) => Promise<string>;
+}
+
+export class InvoiceService implements IInvoicesService {
   private invoices: IUploadedInvoice[] = [];
   private counter = 0;
 
