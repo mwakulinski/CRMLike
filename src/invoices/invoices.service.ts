@@ -1,18 +1,22 @@
-import { IUploadedInvoice } from "../interfaces/invoice.interface";
+import { IInvoiceToUpload } from "../interfaces/invoice.interface";
+
+type ISaveNewInvoiceInformationResponse = { invoiceId: number };
 
 export interface IInvoicesService {
-  saveNewInvoiceInformation: (invoice: IUploadedInvoice) => Promise<string>;
+  saveNewInvoiceInformation: (
+    invoice: IInvoiceToUpload
+  ) => Promise<ISaveNewInvoiceInformationResponse>;
 }
 
 export class InvoiceService implements IInvoicesService {
-  private invoices: IUploadedInvoice[] = [];
+  private readonly invoices: IInvoiceToUpload[] = [];
   private counter = 0;
 
-  async saveNewInvoiceInformation(invoice: IUploadedInvoice) {
+  async saveNewInvoiceInformation(invoice: IInvoiceToUpload) {
     invoice.details.id = this.counter;
     this.invoices.push(invoice);
     this.counter++;
-    return `Invoice with id ${invoice.details.id} entry successfully added to database`;
+    return { invoiceId: invoice.details.id };
   }
 }
 
