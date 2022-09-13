@@ -1,14 +1,14 @@
-export interface IInvoice {
+export type IInvoice = {
   id?: number;
   owner: string;
-  customer: string;
   amountDue: number;
   dueDate: Date;
   issueDate: Date;
   subject: string;
-}
+};
 
-export interface IUploadedInvoice {
+export type IInvoiceToUpload = {
   fileUrl: string;
+  uploadTo: string;
   details: IInvoice;
-}
+};
