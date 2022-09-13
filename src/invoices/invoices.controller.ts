@@ -8,7 +8,7 @@ import { IInvoiceToUpload } from "../interfaces/invoice.interface";
 import { IFilesUploaderService } from "../uploader/uploader.service";
 import { ISenderService } from "../sender/sender.service";
 
-export class InvoicesController implements IController {
+class InvoicesController implements IController {
   private readonly invoicesService: IInvoicesService;
   private readonly filesUploaderService: IFilesUploaderService;
   private readonly senderService: ISenderService;
@@ -53,3 +53,5 @@ export class InvoicesController implements IController {
     });
   };
 }
+
+export default InvoicesController;
