@@ -1,5 +1,8 @@
 import "dotenv/config";
 import App from "./app";
+import DateHandlerService, {
+  IDateHandlerService,
+} from "./date-handler/date-handler.service";
 import EmployeeController from "./employee/employee.controller";
 import EmployeeService, { IEmployeeService } from "./employee/employee.service";
 import InvoicesController from "./invoices/invoices.controller";
@@ -12,6 +15,14 @@ import FilesUploaderService, {
 
 const port = Number(process.env.PORT);
 
+export interface IUtilsServices {
+  dateHandlerService: IDateHandlerService;
+}
+
+const utilsServices = {
+  dateHandlerService: new DateHandlerService(),
+};
+
 export interface IServices {
   employeesService: IEmployeeService;
   filesUploaderService: IFilesUploaderService;
@@ -22,7 +33,7 @@ const services: IServices = {
   employeesService: new EmployeeService(),
   filesUploaderService: new FilesUploaderService(),
   invoicesService: new InvoiceService(),
-  senderService: new SenderService(),
+  senderService: new SenderService(utilsServices),
 };
 
 const app = new App(
