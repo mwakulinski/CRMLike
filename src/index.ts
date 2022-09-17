@@ -1,5 +1,6 @@
 import "dotenv/config";
 import App from "./app";
+import database from "./database/database";
 import DateHandlerService, {
   IDateHandlerService,
 } from "./date-handler/date-handler.service";
@@ -30,7 +31,7 @@ export interface IServices {
   senderService: ISenderService;
 }
 const services: IServices = {
-  employeesService: new EmployeeService(),
+  employeesService: new EmployeeService(database),
   filesUploaderService: new FilesUploaderService(),
   invoicesService: new InvoiceService(),
   senderService: new SenderService(utilsServices),
