@@ -2,19 +2,20 @@ import { IDatabase } from "../database/database";
 import EmployeeService, { IEmployeeService } from "./employee.service";
 describe("EmployeeService", () => {
   let mockEmployeeService: IEmployeeService;
-  const mockDataBase: IDatabase = {
-    employees: [
-      {
-        id: 0,
-        name: "Michał",
-        surname: "Wakulinski",
-        githubAccount: "mwakulinski",
-        employmentType: "B2B",
-      },
-    ],
-    invoices: [],
-  };
+  let mockDataBase: IDatabase;
   beforeEach(() => {
+    mockDataBase = {
+      employees: [
+        {
+          id: 0,
+          name: "Michał",
+          surname: "Wakulinski",
+          githubAccount: "mwakulinski",
+          employmentType: "B2B",
+        },
+      ],
+      invoices: [],
+    };
     mockEmployeeService = new EmployeeService(mockDataBase);
   });
 
@@ -34,6 +35,20 @@ describe("EmployeeService", () => {
         employmentType: "B2B",
         id: expect.any(Number),
       });
+    });
+  });
+
+  describe("getAllEmployees", () => {
+    it("should return all employees", async () => {
+      expect(await mockEmployeeService.getAllEmployees()).toEqual([
+        {
+          id: 0,
+          name: "Michał",
+          surname: "Wakulinski",
+          githubAccount: "mwakulinski",
+          employmentType: "B2B",
+        },
+      ]);
     });
   });
 });
