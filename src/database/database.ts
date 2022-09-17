@@ -1,9 +1,9 @@
 import { IEmployee, IEmployeeCreate } from "../employee/interfaces";
-import { IInvoice } from "../interfaces/invoice.interface";
+import { IInvoice, IInvoiceToUpload } from "../interfaces/invoice.interface";
 
 export interface IDatabase {
   employees: IEmployee[];
-  invoices: IInvoice[];
+  invoices: IInvoiceToUpload[];
 }
 
 const database: IDatabase = {
