@@ -51,4 +51,20 @@ describe("EmployeeService", () => {
       ]);
     });
   });
+
+  describe("getEmployeeById", () => {
+    it("should return employee when employee id passed", async () => {
+      expect(await mockEmployeeService.getEmployeeById(0)).toEqual({
+        id: 0,
+        name: "Michał",
+        surname: "Wakulinski",
+        githubAccount: "mwakulinski",
+        employmentType: "B2B",
+      });
+    });
+
+    it("should return undefined when no employee with provided id", async () => {
+      expect(await mockEmployeeService.getEmployeeById(1));
+    });
+  });
 });
