@@ -6,8 +6,6 @@ export interface IDateHandlerService {
 
 class DateHandlerService {
   getFullDate(date: Date) {
-    console.log(date);
-
     return date.toLocaleDateString();
   }
 }
