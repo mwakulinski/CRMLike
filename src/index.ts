@@ -33,7 +33,7 @@ export interface IServices {
 const services: IServices = {
   employeesService: new EmployeeService(database),
   filesUploaderService: new FilesUploaderService(),
-  invoicesService: new InvoiceService(),
+  invoicesService: new InvoiceService(database),
   senderService: new SenderService(utilsServices),
 };
 
