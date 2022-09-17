@@ -5,7 +5,7 @@ import DateHandlerService, {
 import { IInvoice } from "../interfaces/invoice.interface";
 
 export interface ISenderService {
-  informAboutNewInvoice: (invoice: IInvoice) => Promise<void>;
+  informAboutNewInvoice: (invoice: IInvoice) => Promise<string>;
 }
 
 class SenderService {
@@ -15,11 +15,11 @@ class SenderService {
   }
 
   async informAboutNewInvoice(invoice: IInvoice) {
-    console.log(
-      `New invoice from: ${invoice.owner} has been issued.\nAmount to pay: ${
-        invoice.amountDue
-      }, due date: ${this.dateHandlerService.getFullDate(invoice.dueDate)}`
-    );
+    return `New invoice from: ${
+      invoice.owner
+    } has been issued.\nAmount to pay: ${
+      invoice.amountDue
+    }, due date: ${this.dateHandlerService.getFullDate(invoice.dueDate)}`;
   }
 }
 
