@@ -7,6 +7,7 @@ import DateHandlerService, {
 import EmployeeController from "./employee/employee.controller";
 import EmployeeService, { IEmployeeService } from "./employee/employee.service";
 import InvoicesController from "./invoices/invoices.controller";
+import InvoicesFacade, { IInvoiceFacade } from "./invoices/invoices.facade";
 import InvoiceService, { IInvoicesService } from "./invoices/invoices.service";
 import SenderService, { ISenderService } from "./sender/sender.service";
 import FilesUploaderController from "./uploader/uploader.controller";
@@ -37,11 +38,19 @@ const services: IServices = {
   senderService: new SenderService(utilsServices),
 };
 
+export interface IFacades {
+  invoiceFacade: IInvoiceFacade;
+}
+
+const facades: IFacades = {
+  invoiceFacade: new InvoicesFacade(services),
+};
+
 const app = new App(
   [
     new EmployeeController(services),
     new FilesUploaderController(services),
-    new InvoicesController(services),
+    new InvoicesController(facades),
   ],
   port
 );
