@@ -1,7 +1,7 @@
 import { NextFunction, Router, Request, Response } from "express";
 import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
-import EmployeeService, { IEmployeeService } from "./employee.service";
+import { IEmployeeService } from "./employee.service";
 import { IEmployeeCreate } from "./interfaces";
 import validate from "./employee.validation";
 import { IServices } from "..";

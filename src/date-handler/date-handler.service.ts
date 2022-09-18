@@ -1,5 +1,3 @@
-import { number } from "joi";
-
 export interface IDateHandlerService {
   getFullDate: (date: Date) => string;
 }

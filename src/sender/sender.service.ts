@@ -1,7 +1,5 @@
 import { IUtilsServices } from "..";
-import DateHandlerService, {
-  IDateHandlerService,
-} from "../date-handler/date-handler.service";
+import { IDateHandlerService } from "../date-handler/date-handler.service";
 import { IInvoice } from "../interfaces/invoice.interface";
 
 export interface ISenderService {

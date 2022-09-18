@@ -1,12 +1,9 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { IFacades, IServices } from "..";
+import { IFacades } from "..";
 import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
-import { IInvoicesService } from "./invoices.service";
 import validate from "./invoice.validation";
 import { IInvoiceToUpload } from "../interfaces/invoice.interface";
-import { IFilesUploaderService } from "../uploader/uploader.service";
-import { ISenderService } from "../sender/sender.service";
 import { IInvoiceFacade } from "./invoices.facade";
 
 class InvoicesController implements IController {
