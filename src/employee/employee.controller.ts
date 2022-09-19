@@ -8,6 +8,7 @@ import { IServices } from "..";
 
 class EmployeeController implements IController {
   private readonly employeesServices: IEmployeeService;
+
   constructor(
     { employeesService }: IServices,
     public path: string = "/employees",
