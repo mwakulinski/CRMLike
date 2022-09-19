@@ -3,19 +3,19 @@ export interface IEmployee {
   name: string;
   surname: string;
   githubAccount: string;
-  employmentType: IEmploymentType;
+  employmentType: EmploymentType;
 }
 
-export enum EmploymentType {
+export enum Employment {
   B2B = "B2B",
   UZ = "UZ",
 }
 
-export type IEmploymentType = keyof typeof EmploymentType;
+export type EmploymentType = keyof typeof Employment;
 
 export interface IEmployeeCreate {
   name: string;
   surname: string;
   githubAccount: string;
-  employmentType: IEmploymentType;
+  employmentType: EmploymentType;
 }
