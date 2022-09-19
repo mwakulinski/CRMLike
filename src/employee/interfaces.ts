@@ -6,7 +6,12 @@ export interface IEmployee {
   employmentType: IEmploymentType;
 }
 
-export type IEmploymentType = "B2B" | "UZ";
+export enum EmploymentType {
+  B2B = "B2B",
+  UZ = "UZ",
+}
+
+export type IEmploymentType = keyof typeof EmploymentType;
 
 export interface IEmployeeCreate {
   name: string;
