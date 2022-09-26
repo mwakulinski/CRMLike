@@ -27,16 +27,23 @@ const utilsServices = {
   dateHandlerService: new DateHandlerService(),
 };
 
+export interface IRepositories {
+  invoicesRepository: IInvoicesRepository;
+}
+
+export const repositories: IRepositories = {
+  invoicesRepository: new InvoiceRepository(),
+};
+
 export interface IServices {
   employeesService: IEmployeeService;
   filesUploaderService: IFilesUploaderService;
-  invoicesRepository: IInvoicesRepository;
+
   senderService: ISenderService;
 }
 const services: IServices = {
   employeesService: new EmployeeService(database),
   filesUploaderService: new FilesUploaderService(),
-  invoicesRepository: new InvoiceRepository(),
   senderService: new SenderService(utilsServices),
 };
 
@@ -45,7 +52,7 @@ export interface IFacades {
 }
 
 const facades: IFacades = {
-  invoiceFacade: new InvoicesFacade(services),
+  invoiceFacade: new InvoicesFacade(services, repositories),
 };
 
 const app = new App(

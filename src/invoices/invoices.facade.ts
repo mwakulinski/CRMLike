@@ -1,4 +1,4 @@
-import { IServices } from "..";
+import { IRepositories, IServices } from "..";
 import { IInvoiceToUpload } from "../interfaces/invoice.interface";
 import { ISenderService } from "../sender/sender.service";
 import { IFilesUploaderService } from "../uploader/uploader.service";
@@ -12,14 +12,13 @@ class InvoicesFacade {
   private readonly invoicesRepository: IInvoicesRepository;
   private readonly filesUploaderService: IFilesUploaderService;
   private readonly senderService: ISenderService;
-  constructor({
-    invoicesRepository,
-    filesUploaderService,
-    senderService,
-  }: IServices) {
-    (this.invoicesRepository = invoicesRepository),
-      (this.filesUploaderService = filesUploaderService),
-      (this.senderService = senderService);
+  constructor(
+    { filesUploaderService, senderService }: IServices,
+    { invoicesRepository }: IRepositories
+  ) {
+    this.invoicesRepository = invoicesRepository;
+    this.filesUploaderService = filesUploaderService;
+    this.senderService = senderService;
   }
 
   async uploadNewInvoice({ details, fileUrl, uploadTo }: IInvoiceToUpload) {
