@@ -12,3 +12,6 @@ export type IInvoiceToUpload = {
   uploadTo: string;
   details: IInvoice;
 };
+
+export type InvoiceKey = keyof IInvoice;
+export type InvoiceValue = IInvoice[keyof IInvoice];

@@ -2,22 +2,22 @@ import { IServices } from "..";
 import { IInvoiceToUpload } from "../interfaces/invoice.interface";
 import { ISenderService } from "../sender/sender.service";
 import { IFilesUploaderService } from "../uploader/uploader.service";
-import { IInvoicesService } from "./invoices.service";
+import { IInvoicesRepository } from "./invoices.repository";
 
 export interface IInvoiceFacade {
   uploadNewInvoice: (invoiceToUpload: IInvoiceToUpload) => Promise<number>;
 }
 
 class InvoicesFacade {
-  private readonly invoicesService: IInvoicesService;
+  private readonly invoicesRepository: IInvoicesRepository;
   private readonly filesUploaderService: IFilesUploaderService;
   private readonly senderService: ISenderService;
   constructor({
-    invoicesService,
+    invoicesRepository,
     filesUploaderService,
     senderService,
   }: IServices) {
-    (this.invoicesService = invoicesService),
+    (this.invoicesRepository = invoicesRepository),
       (this.filesUploaderService = filesUploaderService),
       (this.senderService = senderService);
   }
@@ -30,11 +30,12 @@ class InvoicesFacade {
 
     console.log(fileUploadResponse);
 
-    const { invoiceId } = await this.invoicesService.saveNewInvoiceInformation({
-      details,
-      fileUrl,
-      uploadTo,
-    });
+    const { invoiceId } =
+      await this.invoicesRepository.createNewInvoiceInformation({
+        details,
+        fileUrl,
+        uploadTo,
+      });
 
     const senderResponse = await this.senderService.informAboutNewInvoice({
       ...details,

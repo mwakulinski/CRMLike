@@ -8,7 +8,9 @@ import EmployeeController from "./employee/employee.controller";
 import EmployeeService, { IEmployeeService } from "./employee/employee.service";
 import InvoicesController from "./invoices/invoices.controller";
 import InvoicesFacade, { IInvoiceFacade } from "./invoices/invoices.facade";
-import InvoiceService, { IInvoicesService } from "./invoices/invoices.service";
+import InvoiceRepository, {
+  IInvoicesRepository,
+} from "./invoices/invoices.repository";
 import SenderService, { ISenderService } from "./sender/sender.service";
 import FilesUploaderController from "./uploader/uploader.controller";
 import FilesUploaderService, {
@@ -28,13 +30,13 @@ const utilsServices = {
 export interface IServices {
   employeesService: IEmployeeService;
   filesUploaderService: IFilesUploaderService;
-  invoicesService: IInvoicesService;
+  invoicesRepository: IInvoicesRepository;
   senderService: ISenderService;
 }
 const services: IServices = {
   employeesService: new EmployeeService(database),
   filesUploaderService: new FilesUploaderService(),
-  invoicesService: new InvoiceService(database),
+  invoicesRepository: new InvoiceRepository(database),
   senderService: new SenderService(utilsServices),
 };
 
