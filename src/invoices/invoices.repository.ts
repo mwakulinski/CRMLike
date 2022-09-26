@@ -25,12 +25,8 @@ export interface IInvoicesRepository {
 }
 
 export class InvoiceRepository implements IInvoicesRepository {
-  private invoices: IInvoiceToUpload[];
+  private invoices: IInvoiceToUpload[] = [];
   private counter = 0;
-
-  constructor({ invoices }: IDatabase) {
-    this.invoices = invoices;
-  }
 
   async createNewInvoiceInformation(invoice: IInvoiceToUpload) {
     invoice.details.id = this.counter;

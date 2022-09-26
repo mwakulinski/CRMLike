@@ -36,7 +36,7 @@ export interface IServices {
 const services: IServices = {
   employeesService: new EmployeeService(database),
   filesUploaderService: new FilesUploaderService(),
-  invoicesRepository: new InvoiceRepository(database),
+  invoicesRepository: new InvoiceRepository(),
   senderService: new SenderService(utilsServices),
 };
 
