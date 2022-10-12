@@ -1,33 +1,50 @@
-import { IDatabase } from "../database/database";
-import { IEmployee, IEmployeeCreate } from "./interfaces";
+import { IRepositories } from "..";
+import { IEmployeeRepository } from "./employee.repository";
+import { EmployeeType, EmployeeCreateType } from "./interfaces";
 
 export interface IEmployeeService {
-  createEmployee: (employee: IEmployeeCreate) => Promise<IEmployee>;
-  getAllEmployees: () => Promise<IEmployee[]>;
-  getEmployeeById: (id: number) => Promise<IEmployee | undefined>;
+  createEmployee: (employee: EmployeeCreateType) => Promise<EmployeeType>;
+  getAllEmployees: () => Promise<EmployeeType[]>;
+  getEmployeeById: (id: number) => Promise<EmployeeType | undefined>;
 }
 
 class EmployeeService implements IEmployeeService {
-  private counter = 1;
-  private readonly employees: IEmployee[];
-
-  constructor({ employees }: IDatabase) {
-    this.employees = employees;
+  private readonly employeeRepository: IEmployeeRepository;
+  constructor({ employeeRepository }: IRepositories) {
+    this.employeeRepository = employeeRepository;
   }
 
-  async createEmployee(employee: IEmployeeCreate) {
-    const newEmployee = { id: this.counter, ...employee };
-    this.employees.push(newEmployee);
-    this.counter++;
-    return newEmployee;
+  async createEmployee({
+    name,
+    surname,
+    githubAccount,
+    employmentType,
+  }: EmployeeCreateType) {
+    const user = await this.employeeRepository.findUnique(
+      "githubAccount",
+      githubAccount
+    );
+
+    if (user) {
+      throw new Error(
+        `User with githubAccount: ${githubAccount} already exist`
+      ); // TODO change to exceptions latter
+    }
+
+    return await this.employeeRepository.createEmployee({
+      name,
+      surname,
+      githubAccount,
+      employmentType,
+    });
   }
 
   async getAllEmployees() {
-    return this.employees;
+    return await this.employeeRepository.getAllEmployees();
   }
 
   async getEmployeeById(id: number) {
-    return this.employees.find((employee) => employee.id === id);
+    return await this.employeeRepository.findUnique("id", id);
   }
 }
 
