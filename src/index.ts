@@ -1,10 +1,12 @@
 import "dotenv/config";
 import App from "./app";
-import database from "./database/database";
 import DateHandlerService, {
   IDateHandlerService,
 } from "./date-handler/date-handler.service";
 import EmployeeController from "./employee/employee.controller";
+import EmployeeRepository, {
+  IEmployeeRepository,
+} from "./employee/employee.repository";
 import EmployeeService, { IEmployeeService } from "./employee/employee.service";
 import InvoicesController from "./invoices/invoices.controller";
 import InvoicesFacade, { IInvoiceFacade } from "./invoices/invoices.facade";
@@ -29,20 +31,21 @@ const utilsServices = {
 
 export interface IRepositories {
   invoicesRepository: IInvoicesRepository;
+  employeeRepository: IEmployeeRepository;
 }
 
 export const repositories: IRepositories = {
   invoicesRepository: new InvoiceRepository(),
+  employeeRepository: new EmployeeRepository(),
 };
 
 export interface IServices {
-  employeesService: IEmployeeService;
+  employeeService: IEmployeeService;
   filesUploaderService: IFilesUploaderService;
-
   senderService: ISenderService;
 }
 const services: IServices = {
-  employeesService: new EmployeeService(database),
+  employeeService: new EmployeeService(repositories),
   filesUploaderService: new FilesUploaderService(),
   senderService: new SenderService(utilsServices),
 };
