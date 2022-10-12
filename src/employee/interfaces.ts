@@ -1,4 +1,4 @@
-export type IEmployee = {
+export type EmployeeType = {
   id: number;
   name: string;
   surname: string;
@@ -13,9 +13,11 @@ export enum Employment {
 
 export type EmploymentType = keyof typeof Employment;
 
-export type IEmployeeCreate = {
+export type EmployeeCreateType = {
   name: string;
   surname: string;
   githubAccount: string;
   employmentType: EmploymentType;
 };
+
+export type EmployeeUniqueProperty = "id" | "githubAccount";

@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { IEmployeeCreate, Employment } from "./interfaces";
+import { EmployeeCreateType, Employment } from "./interfaces";
 
-const employeeCreate: Joi.ObjectSchema<IEmployeeCreate> = Joi.object({
+const employeeCreate: Joi.ObjectSchema<EmployeeCreateType> = Joi.object({
   name: Joi.string().required(),
   surname: Joi.string().required(),
   githubAccount: Joi.string().required(),
