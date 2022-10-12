@@ -1,20 +1,20 @@
 import { NextFunction, Router, Request, Response } from "express";
 import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
-import { IEmployeeService } from "./employee.service";
-import { IEmployeeCreate } from "./interfaces";
+import { EmployeeCreateType } from "./interfaces";
 import validate from "./employee.validation";
 import { IServices } from "..";
+import { IEmployeeService } from "./employee.service";
 
 class EmployeeController implements IController {
-  private readonly employeesServices: IEmployeeService;
+  private readonly employeeServices: IEmployeeService;
 
   constructor(
-    { employeesService }: IServices,
+    { employeeService }: IServices,
     public path: string = "/employees",
     public router: Router = Router()
   ) {
-    this.employeesServices = employeesService;
+    this.employeeServices = employeeService;
     this.initializeRoutes();
   }
 
@@ -29,13 +29,13 @@ class EmployeeController implements IController {
   }
 
   getAllEmployees = async (req: Request, res: Response, next: NextFunction) => {
-    const employees = await this.employeesServices.getAllEmployees();
+    const employees = await this.employeeServices.getAllEmployees();
     return res.status(200).send({ employees });
   };
 
   getEmployeeById = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const employee = await this.employeesServices.getEmployeeById(Number(id));
+    const employee = await this.employeeServices.getEmployeeById(Number(id));
     return res.status(200).json(employee);
   };
 
@@ -44,8 +44,8 @@ class EmployeeController implements IController {
     res: Response,
     next: NextFunction
   ) => {
-    const employeeCreateDto: IEmployeeCreate = req.body;
-    const newEmployeeID = await this.employeesServices.createEmployee(
+    const employeeCreateDto: EmployeeCreateType = req.body;
+    const newEmployeeID = await this.employeeServices.createEmployee(
       employeeCreateDto
     );
     return res.status(201).json({ id: newEmployeeID });
