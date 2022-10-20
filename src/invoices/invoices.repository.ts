@@ -1,4 +1,3 @@
-import { IDatabase } from "../database/database";
 import {
   IInvoiceToUpload,
   InvoiceKey,
