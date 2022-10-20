@@ -2,7 +2,6 @@ import {
   EmployeeType,
   EmployeeCreateType,
   EmployeeUniqueProperty,
-  EmploymentType,
 } from "./interfaces";
 
 export interface IEmployeeRepository {
@@ -15,7 +14,7 @@ export interface IEmployeeRepository {
 }
 
 class EmployeeRepository implements IEmployeeRepository {
-  private counter = 1;
+  private counter = 0;
   private readonly employees: EmployeeType[] = [];
 
   async createEmployee(employee: EmployeeCreateType) {
