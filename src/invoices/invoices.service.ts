@@ -8,7 +8,7 @@ export interface IInvoiceFacade {
   uploadNewInvoice: (invoiceToUpload: IInvoiceToUpload) => Promise<number>;
 }
 
-class InvoicesFacade {
+class InvoicesService {
   private readonly invoicesRepository: IInvoicesRepository;
   private readonly filesUploaderService: IFilesUploaderService;
   private readonly senderService: ISenderService;
@@ -47,4 +47,4 @@ class InvoicesFacade {
   }
 }
 
-export default InvoicesFacade;
+export default InvoicesService;

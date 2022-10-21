@@ -4,7 +4,7 @@ import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
 import validate from "./invoice.validation";
 import { IInvoiceToUpload } from "../interfaces/invoice.interface";
-import { IInvoiceFacade } from "./invoices.facade";
+import { IInvoiceFacade } from "./invoices.service";
 
 class InvoicesController implements IController {
   private readonly invoiceFacade: IInvoiceFacade;

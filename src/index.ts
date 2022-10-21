@@ -9,7 +9,7 @@ import EmployeeRepository, {
 } from "./employee/employee.repository";
 import EmployeeService, { IEmployeeService } from "./employee/employee.service";
 import InvoicesController from "./invoices/invoices.controller";
-import InvoicesFacade, { IInvoiceFacade } from "./invoices/invoices.facade";
+import InvoicesService, { IInvoiceFacade } from "./invoices/invoices.service";
 import InvoiceRepository, {
   IInvoicesRepository,
 } from "./invoices/invoices.repository";
@@ -55,7 +55,7 @@ export interface IFacades {
 }
 
 const facades: IFacades = {
-  invoiceFacade: new InvoicesFacade(services, repositories),
+  invoiceFacade: new InvoicesService(services, repositories),
 };
 
 const app = new App(
