@@ -20,7 +20,7 @@ import FilesUploaderService, {
 } from "./uploader/uploader.service";
 import { EnvSetter } from "./env-setter/env-setter";
 
-const port = EnvSetter.setPort(process.env.PORT, { min: 0, max: 65353 });
+const port = EnvSetter.setPort(process.env.PORT, { min: 0, max: 65536 });
 
 export interface IUtilsServices {
   dateHandlerService: IDateHandlerService;
