@@ -17,11 +17,11 @@ export class EnvSetter {
   // }
 
   static setPort(localVariable: envType, range: { min: number; max: number }) {
-    if (Validator.isTransformableToInteger(localVariable)) {
+    if (!Validator.isTransformableToInteger(localVariable)) {
       throw new Error(`${localVariable} is not an Integer`);
     }
 
-    if (Validator.isInGivenRange(localVariable, range)) {
+    if (!Validator.isInGivenRange(localVariable, range)) {
       throw new Error(
         `${localVariable} must be in range ${range.min} - ${range.max}`
       );
