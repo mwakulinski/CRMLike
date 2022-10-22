@@ -18,8 +18,9 @@ import FilesUploaderController from "./uploader/uploader.controller";
 import FilesUploaderService, {
   IFilesUploaderService,
 } from "./uploader/uploader.service";
+import { EnvSetter } from "./env-setter/env-setter";
 
-const port = Number(process.env.PORT);
+const port = EnvSetter.setPort(process.env.PORT, { min: 0, max: 65353 });
 
 export interface IUtilsServices {
   dateHandlerService: IDateHandlerService;
