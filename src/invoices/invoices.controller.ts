@@ -3,7 +3,7 @@ import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
 import validate from "./invoice.validation";
 import { IInvoiceToUpload } from "../interfaces/invoice.interface";
-import { IInvoiceFacade } from "./invoiceFacade";
+import { IInvoiceFacade } from "./invoice.facade";
 import { IFacades } from "../facades";
 
 class InvoicesController implements IController {

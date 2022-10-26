@@ -1,17 +1,19 @@
-import { IRepositories, IServices } from "..";
 import { IInvoiceToUpload } from "../interfaces/invoice.interface";
 import { ISenderService } from "../sender/sender.service";
 import { IFilesUploaderService } from "../uploader/uploader.service";
 import { IInvoicesRepository } from "./invoices.repository";
+import { IRepositories } from "../repositories";
+import { IServices } from "../services";
 
 export interface IInvoiceFacade {
   uploadNewInvoice: (invoiceToUpload: IInvoiceToUpload) => Promise<number>;
 }
 
-class InvoicesService {
+class InvoiceFacade implements IInvoiceFacade {
   private readonly invoicesRepository: IInvoicesRepository;
   private readonly filesUploaderService: IFilesUploaderService;
   private readonly senderService: ISenderService;
+
   constructor(
     { filesUploaderService, senderService }: IServices,
     { invoicesRepository }: IRepositories
@@ -47,4 +49,4 @@ class InvoicesService {
   }
 }
 
-export default InvoicesService;
+export default InvoiceFacade;

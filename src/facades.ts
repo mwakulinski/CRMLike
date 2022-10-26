@@ -1,4 +1,4 @@
-import InvoiceFacade, { IInvoiceFacade } from "./invoices/invoiceFacade";
+import InvoiceFacade, { IInvoiceFacade } from "./invoices/invoice.facade";
 import { services } from "./services";
 import { repositories } from "./repositories";
 
