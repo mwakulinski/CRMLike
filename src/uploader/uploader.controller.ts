@@ -1,9 +1,9 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { IServices } from "..";
 import { IController } from "../interfaces/controller.interface";
 import { IFileToUpload } from "../interfaces/file.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
 import validate from "./uploader.validation";
+import { IServices } from "../services";
 
 class FilesUploaderController implements IController {
   private readonly filesUploaderService;

@@ -3,8 +3,8 @@ import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
 import { EmployeeCreateType } from "./interfaces";
 import validate from "./employee.validation";
-import { IServices } from "..";
 import { IEmployeeService } from "./employee.service";
+import { IServices } from "../services";
 
 class EmployeeController implements IController {
   private readonly employeeServices: IEmployeeService;
