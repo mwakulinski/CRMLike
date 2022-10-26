@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { IFacades } from "..";
 import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
 import validate from "./invoice.validation";
 import { IInvoiceToUpload } from "../interfaces/invoice.interface";
-import { IInvoiceFacade } from "./invoices.service";
+import { IInvoiceFacade } from "./invoiceFacade";
+import { IFacades } from "../facades";
 
 class InvoicesController implements IController {
   private readonly invoiceFacade: IInvoiceFacade;
