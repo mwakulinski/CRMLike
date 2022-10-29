@@ -11,7 +11,7 @@ export class Validator {
     input: string | undefined,
     range: { min: number; max: number }
   ) {
-    if (!this.isTransformableToNumber(input)) {
+    if (!Validator.isTransformableToNumber(input)) {
       return false;
     }
 
