@@ -7,5 +7,11 @@ export interface IFacades {
 }
 
 export const facades: IFacades = {
-  invoiceFacade: new InvoiceFacade(services, repositories),
+  invoiceFacade: new InvoiceFacade(
+    {
+      filesUploaderService: services.filesUploaderService,
+      senderService: services.senderService,
+    },
+    repositories.invoicesRepository
+  ),
 };
