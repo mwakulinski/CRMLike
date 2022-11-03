@@ -1,16 +1,16 @@
 import { IInvoice } from "../interfaces/invoice.interface";
 
 export interface ISenderService {
-  informAboutNewInvoice: (invoice: IInvoice) => Promise<string>;
+  informAboutNewInvoice: (invoice: IInvoice) => Promise<void>;
 }
 
-class SenderService {
+class SenderService implements ISenderService {
   async informAboutNewInvoice(invoice: IInvoice) {
-    return `New invoice from: ${
-      invoice.owner
-    } has been issued.\nAmount to pay: ${
-      invoice.amountDue
-    }, due date: ${new Date(invoice.dueDate).toLocaleDateString()}`;
+    console.log(
+      `New invoice from: ${invoice.owner} has been issued.\nAmount to pay: ${
+        invoice.amountDue
+      }, due date: ${new Date(invoice.dueDate).toLocaleDateString()}`
+    );
   }
 }
 
