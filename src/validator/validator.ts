@@ -1,14 +1,14 @@
 export class Validator {
-  private static isTransformableToNumber(input: string | undefined) {
+  static isTransformableToNumber(input: any | undefined) {
     return !Number.isNaN(Number(input));
   }
 
-  static isTransformableToInteger(input: string | undefined) {
+  static isTransformableToInteger(input: any | undefined) {
     return Number.isInteger(Number(input));
   }
 
   static isInGivenRange(
-    input: string | undefined,
+    input: any | undefined,
     range: { min: number; max: number }
   ) {
     if (!Validator.isTransformableToNumber(input)) {
