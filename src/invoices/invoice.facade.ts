@@ -20,7 +20,7 @@ class InvoiceFacade implements IInvoiceFacade {
       filesUploaderService: IFilesUploaderService;
       senderService: ISenderService;
     },
-    invoicesRepository: IInvoicesRepository
+    { invoicesRepository }: { invoicesRepository: IInvoicesRepository }
   ) {
     this.invoicesRepository = invoicesRepository;
     this.filesUploaderService = filesUploaderService;

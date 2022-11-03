@@ -11,6 +11,7 @@ import { beforeEach } from "mocha";
 import { expect } from "chai";
 import chai from "chai";
 import spies from "chai-spies";
+
 chai.use(spies);
 
 describe("invoice facade ", () => {
@@ -45,7 +46,7 @@ describe("invoice facade ", () => {
         senderService: mockSenderService,
         filesUploaderService: mockUploaderService,
       },
-      mockInvoiceRepository
+      { invoicesRepository: mockInvoiceRepository }
     );
   });
 
