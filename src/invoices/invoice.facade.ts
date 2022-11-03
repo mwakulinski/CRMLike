@@ -28,12 +28,10 @@ class InvoiceFacade implements IInvoiceFacade {
   }
 
   async uploadNewInvoice({ details, fileUrl, uploadTo }: IInvoiceToUpload) {
-    const fileUploadResponse = await this.filesUploaderService.uploadFile({
+    await this.filesUploaderService.uploadFile({
       filePath: fileUrl,
       uploadTo: uploadTo,
     });
-
-    console.log(fileUploadResponse);
 
     const { invoiceId } =
       await this.invoicesRepository.createNewInvoiceInformation({
@@ -42,12 +40,10 @@ class InvoiceFacade implements IInvoiceFacade {
         uploadTo,
       });
 
-    const senderResponse = await this.senderService.informAboutNewInvoice({
+    await this.senderService.informAboutNewInvoice({
       ...details,
       id: invoiceId,
     });
-
-    console.log(senderResponse);
 
     return invoiceId;
   }
