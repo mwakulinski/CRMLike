@@ -1,0 +1,5 @@
+{
+  "mocha.files.glob": "./test/*.spec.ts",
+  "mocha.requires": ["ts-node/register"],
+  "mocha.options": { "compilers": { "ts": "ts-node/register" } }
+}
