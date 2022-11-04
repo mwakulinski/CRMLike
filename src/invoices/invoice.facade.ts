@@ -28,7 +28,7 @@ class InvoiceFacade implements IInvoiceFacade {
   }
 
   async uploadNewInvoice({ details, fileUrl, uploadTo }: IInvoiceToUpload) {
-    await this.filesUploaderService.uploadFile({
+    await this.filesUploaderService.upload({
       filePath: fileUrl,
       uploadTo: uploadTo,
     });

@@ -5,8 +5,8 @@ import {
 } from "./interfaces";
 
 export interface IEmployeeRepository {
-  createEmployee: (employee: EmployeeCreateType) => Promise<EmployeeType>;
-  getAllEmployees: () => Promise<EmployeeType[]>;
+  create: (employee: EmployeeCreateType) => Promise<EmployeeType>;
+  getAll: () => Promise<EmployeeType[]>;
   findUnique: (
     uniqueProperty: EmployeeUniqueProperty,
     value: number | string
@@ -17,14 +17,14 @@ class EmployeeRepository implements IEmployeeRepository {
   private counter = 0;
   private readonly employees: EmployeeType[] = [];
 
-  async createEmployee(employee: EmployeeCreateType) {
+  async create(employee: EmployeeCreateType) {
     const newEmployee = { id: this.counter, ...employee };
     this.employees.push(newEmployee);
     this.counter++;
     return newEmployee;
   }
 
-  async getAllEmployees() {
+  async getAll() {
     return this.employees;
   }
 

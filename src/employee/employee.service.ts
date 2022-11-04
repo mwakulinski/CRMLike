@@ -3,9 +3,9 @@ import { EmployeeType, EmployeeCreateType } from "./interfaces";
 import { IRepositories } from "../repositories";
 
 export interface IEmployeeService {
-  createEmployee: (employee: EmployeeCreateType) => Promise<EmployeeType>;
-  getAllEmployees: () => Promise<EmployeeType[]>;
-  getEmployeeById: (id: number) => Promise<EmployeeType | undefined>;
+  create: (employee: EmployeeCreateType) => Promise<EmployeeType>;
+  getAll: () => Promise<EmployeeType[]>;
+  getById: (id: number) => Promise<EmployeeType | undefined>;
 }
 
 class EmployeeService implements IEmployeeService {
@@ -14,7 +14,7 @@ class EmployeeService implements IEmployeeService {
     this.employeeRepository = employeeRepository;
   }
 
-  async createEmployee({
+  async create({
     name,
     surname,
     githubAccount,
@@ -31,7 +31,7 @@ class EmployeeService implements IEmployeeService {
       ); // TODO change to exceptions latter
     }
 
-    return await this.employeeRepository.createEmployee({
+    return await this.employeeRepository.create({
       name,
       surname,
       githubAccount,
@@ -39,11 +39,11 @@ class EmployeeService implements IEmployeeService {
     });
   }
 
-  async getAllEmployees() {
-    return await this.employeeRepository.getAllEmployees();
+  async getAll() {
+    return await this.employeeRepository.getAll();
   }
 
-  async getEmployeeById(id: number) {
+  async getById(id: number) {
     return await this.employeeRepository.findUnique("id", id);
   }
 }

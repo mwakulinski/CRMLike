@@ -19,35 +19,29 @@ class EmployeeController implements IController {
   }
 
   private initializeRoutes() {
-    this.router.get(this.path, this.getAllEmployees);
-    this.router.get(`${this.path}/:id`, this.getEmployeeById);
+    this.router.get(this.path, this.getAll);
+    this.router.get(`${this.path}/:id`, this.getById);
     this.router.post(
       this.path,
       validationMiddleware(validate.employeeCreate),
-      this.createNewEmployee
+      this.create
     );
   }
 
-  getAllEmployees = async (req: Request, res: Response, next: NextFunction) => {
-    const employees = await this.employeeServices.getAllEmployees();
+  getAll = async (req: Request, res: Response, next: NextFunction) => {
+    const employees = await this.employeeServices.getAll();
     return res.status(200).send({ employees });
   };
 
-  getEmployeeById = async (req: Request, res: Response, next: NextFunction) => {
+  getById = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const employee = await this.employeeServices.getEmployeeById(Number(id));
+    const employee = await this.employeeServices.getById(Number(id));
     return res.status(200).json(employee);
   };
 
-  createNewEmployee = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  create = async (req: Request, res: Response, next: NextFunction) => {
     const employeeCreateDto: EmployeeCreateType = req.body;
-    const newEmployeeID = await this.employeeServices.createEmployee(
-      employeeCreateDto
-    );
+    const newEmployeeID = await this.employeeServices.create(employeeCreateDto);
     return res.status(201).json({ id: newEmployeeID });
   };
 }

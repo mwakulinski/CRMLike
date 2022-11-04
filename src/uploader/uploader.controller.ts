@@ -20,15 +20,13 @@ class FilesUploaderController implements IController {
     this.router.post(
       this.path,
       validationMiddleware(validate.uploadFile),
-      this.uploadNewFile
+      this.upload
     );
   }
 
-  uploadNewFile = async (req: Request, res: Response, next: NextFunction) => {
+  upload = async (req: Request, res: Response, next: NextFunction) => {
     const fileToUploadParams: IFileToUpload = req.body;
-    const response = await this.filesUploaderService.uploadFile(
-      fileToUploadParams
-    );
+    const response = await this.filesUploaderService.upload(fileToUploadParams);
     return res.status(201).send(response);
   };
 }
