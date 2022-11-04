@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import { IController } from "./interfaces/controller.interface";
 
 class App {
-  private app: Application;
+  private readonly app: Application;
   constructor(private controllers: IController[], private port: number) {
     this.app = express();
     this.initializeMiddlewares(this.app);
