@@ -2,7 +2,7 @@ import { IInvoiceToUpload } from "../interfaces/invoice.interface";
 import { ISenderService } from "../sender/sender.service";
 import { IFilesUploaderService } from "../uploader/uploader.service";
 import { IInvoicesRepository } from "./invoices.repository";
-
+import { ISaveNewInvoiceInformationResponse } from "./invoices.repository";
 export interface IInvoiceFacade {
   uploadNewInvoice: (invoiceToUpload: IInvoiceToUpload) => Promise<number>;
 }
@@ -28,17 +28,20 @@ class InvoiceFacade implements IInvoiceFacade {
   }
 
   async uploadNewInvoice({ details, fileUrl, uploadTo }: IInvoiceToUpload) {
-    await this.filesUploaderService.upload({
-      filePath: fileUrl,
-      uploadTo: uploadTo,
-    });
-
-    const { invoiceId } =
-      await this.invoicesRepository.createNewInvoiceInformation({
+    const [filesUploaderResponse, { invoiceId }]: [
+      string,
+      ISaveNewInvoiceInformationResponse
+    ] = await Promise.all([
+      this.filesUploaderService.upload({
+        filePath: fileUrl,
+        uploadTo: uploadTo,
+      }),
+      this.invoicesRepository.createNewInvoiceInformation({
         details,
         fileUrl,
         uploadTo,
-      });
+      }),
+    ]);
 
     await this.senderService.informAboutNewInvoice({
       ...details,

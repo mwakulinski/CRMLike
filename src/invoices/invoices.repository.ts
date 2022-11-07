@@ -4,7 +4,7 @@ import {
   InvoiceValue,
 } from "../interfaces/invoice.interface";
 
-type ISaveNewInvoiceInformationResponse = { invoiceId: number };
+export type ISaveNewInvoiceInformationResponse = { invoiceId: number };
 
 export interface IInvoicesRepository {
   createNewInvoiceInformation: (
