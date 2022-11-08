@@ -15,10 +15,11 @@ import spies from "chai-spies";
 chai.use(spies);
 
 describe("invoice facade ", () => {
-  let mockInvoiceRepository: IInvoicesRepository;
-  let mockUploaderService: IFilesUploaderService;
-  let mockSenderService: ISenderService;
+  let uploaderService: IFilesUploaderService;
+  let senderService: ISenderService;
+
   let mockInvoiceFacade: IInvoiceFacade;
+  let mockInvoiceRepository: IInvoicesRepository;
 
   const mockInvoice = {
     amountDue: 200,
@@ -35,16 +36,16 @@ describe("invoice facade ", () => {
   };
 
   before(() => {
-    mockSenderService = new SenderService();
-    mockUploaderService = new FilesUploaderService();
+    senderService = new SenderService();
+    uploaderService = new FilesUploaderService();
   });
 
   beforeEach(() => {
     mockInvoiceRepository = new InvoiceRepository();
     mockInvoiceFacade = new InvoiceFacade(
       {
-        senderService: mockSenderService,
-        filesUploaderService: mockUploaderService,
+        senderService: senderService,
+        filesUploaderService: uploaderService,
       },
       { invoicesRepository: mockInvoiceRepository }
     );
@@ -52,7 +53,7 @@ describe("invoice facade ", () => {
 
   describe("uploadNewInvoice", () => {
     it("should call method uploadFile once", async () => {
-      const spyUploadFile = chai.spy.on(mockUploaderService, "uploadFile");
+      const spyUploadFile = chai.spy.on(uploaderService, "uploadFile");
       await mockInvoiceFacade.uploadNewInvoice(mockInvoiceToUpload);
       expect(spyUploadFile).to.have.been.called.once;
     });
@@ -82,7 +83,7 @@ describe("invoice facade ", () => {
 
     it("should call method informAboutNewInvoice once", async () => {
       const spyInformAboutNewInvoice = chai.spy.on(
-        mockSenderService,
+        senderService,
         "informAboutNewInvoice"
       );
       await mockInvoiceFacade.uploadNewInvoice(mockInvoiceToUpload);
