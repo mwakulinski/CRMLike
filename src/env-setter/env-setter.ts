@@ -14,7 +14,13 @@ export class EnvSetter {
   ) {
     let defaultPortValue;
     functionsToValidate.some(({ functionToValidate, args }) => {
-      if (!functionToValidate(localVariable, args)) {
+      const isValidated = EnvSetter.validatePort(
+        localVariable,
+        functionToValidate,
+        args
+      );
+
+      if (!isValidated) {
         defaultPortValue = 3000;
         console.log(
           `${localVariable} doesn't meet required criteria for port\n setting default porty value: ${defaultPortValue}`
@@ -23,5 +29,16 @@ export class EnvSetter {
       }
     });
     return defaultPortValue || Number(localVariable);
+  }
+
+  private static validatePort(
+    localVariable: envType,
+    functionToValidate: validationFunctionType,
+    args?: any[]
+  ) {
+    if (args) {
+      return functionToValidate(localVariable, ...args);
+    }
+    return functionToValidate(localVariable);
   }
 }
