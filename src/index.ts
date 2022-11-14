@@ -7,7 +7,7 @@ import { EnvSetter } from "./env-setter/env-setter";
 import { services } from "./services";
 import { facades } from "./facades";
 import { Validator } from "./validator/validator";
-import { appDatabases } from "./databases";
+import { appDatabaseConnectors } from "./databaseConnectors";
 
 const port = EnvSetter.setPort(process.env.PORT, [
   { functionToValidate: Validator.isTransformableToInteger },
@@ -24,7 +24,7 @@ const app = new App(
     new InvoicesController(facades),
   ],
   port,
-  appDatabases
+  appDatabaseConnectors
 );
 
 app.start();
