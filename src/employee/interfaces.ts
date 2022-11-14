@@ -1,5 +1,5 @@
 export type EmployeeType = {
-  id: number;
+  id: string;
   name: string;
   surname: string;
   githubAccount: string;
@@ -12,6 +12,7 @@ export enum Employment {
 }
 
 export type EmploymentType = keyof typeof Employment;
+export const EmploymentTypeArr = Object.values(Employment);
 
 export type EmployeeCreateType = {
   name: string;
