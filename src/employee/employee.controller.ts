@@ -42,7 +42,7 @@ class EmployeeController implements IController {
   create = async (req: Request, res: Response, next: NextFunction) => {
     const employeeCreateDto: EmployeeCreateType = req.body;
     const newEmployeeID = await this.employeeServices.create(employeeCreateDto);
-    return res.status(201).json({ id: newEmployeeID });
+    return res.status(201).json({ id: newEmployeeID.id });
   };
 }
 
