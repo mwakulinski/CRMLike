@@ -4,6 +4,7 @@ import InvoiceRepository, {
 import EmployeeRepository, {
   IEmployeeRepository,
 } from "./employee/employee.repository";
+import { models } from "./models";
 
 export interface IRepositories {
   invoicesRepository: IInvoicesRepository;
@@ -12,5 +13,5 @@ export interface IRepositories {
 
 export const repositories: IRepositories = {
   invoicesRepository: new InvoiceRepository(),
-  employeeRepository: new EmployeeRepository(),
+  employeeRepository: new EmployeeRepository(models),
 };

@@ -1,3 +1,7 @@
+import e from "express";
+import mongoose, { Mongoose } from "mongoose";
+import { employeeModelType } from "../db/mongoose/models/employee-model";
+import { modelsTypes } from "../models";
 import {
   EmployeeType,
   EmployeeCreateType,
@@ -14,17 +18,44 @@ export interface IEmployeeRepository {
 }
 
 class EmployeeRepository implements IEmployeeRepository {
-  private counter = 0;
   private readonly employees: EmployeeType[] = [];
+  private employee: employeeModelType;
 
-  async create(employee: EmployeeCreateType) {
-    const newEmployee = { id: this.counter, ...employee };
-    this.employees.push(newEmployee);
-    this.counter++;
-    return newEmployee;
+  constructor({ employee }: modelsTypes) {
+    this.employee = employee;
+  }
+
+  async create(employeeCreate: EmployeeCreateType): Promise<EmployeeType> {
+    const newEmployee = await this.employee.create(employeeCreate);
+    const employeeResponse = newEmployee.toObject({
+      transform: function (doc, ret, options) {
+        (ret.id = ret._id.toString()), delete ret._id;
+      },
+      versionKey: false,
+    }) as EmployeeType;
+
+    return employeeResponse;
   }
 
   async getAll() {
+    const allEmployees = await this.employee
+      .find()
+      .lean()
+      .transform((docs) => {
+        return docs.map((doc) => {
+          return {
+            id: doc._id.toString(),
+            name: doc.name,
+            surname: doc.surname,
+            githubAccount: doc.githubAccount,
+            employmentType: doc.employmentType,
+          };
+        });
+      });
+    console.log(allEmployees);
+    console.log(typeof allEmployees);
+    console.log(allEmployees[0] instanceof mongoose.Document);
+
     return this.employees;
   }
 
