@@ -15,16 +15,11 @@ class App {
   }
 
   private async connectDbs(databaseConnectors: IDbConnector[]) {
-    try {
-      await Promise.all(
-        databaseConnectors.map((databaseConnector) =>
-          databaseConnector.connect()
-        )
-      );
-      console.log("connected to db");
-    } catch (error) {
-      throw new Error("Unable to connect to database");
-    }
+    await Promise.all(
+      databaseConnectors.map((databaseConnector) => {
+        return databaseConnector.connect();
+      })
+    );
   }
 
   private initializeMiddlewares(app: Application) {
@@ -39,8 +34,8 @@ class App {
 
   start() {
     this.app.listen(this.port, async () => {
-      console.log("Server is listening on port 3000");
       await this.connectDbs(this.databaseConnectors);
+      console.log("Server is listening on port 3000");
     });
   }
 }
