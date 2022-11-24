@@ -5,7 +5,7 @@ import { IRepositories } from "../repositories";
 export interface IEmployeeService {
   create: (employee: EmployeeCreateType) => Promise<EmployeeType>;
   getAll: () => Promise<EmployeeType[]>;
-  getById: (id: number) => Promise<EmployeeType | undefined>;
+  getById: (id: string) => Promise<EmployeeType | undefined>;
 }
 
 class EmployeeService implements IEmployeeService {
@@ -43,7 +43,7 @@ class EmployeeService implements IEmployeeService {
     return await this.employeeRepository.getAll();
   }
 
-  async getById(id: number) {
+  async getById(id: string) {
     return await this.employeeRepository.findUnique("id", id);
   }
 }
