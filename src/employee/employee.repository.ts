@@ -1,13 +1,10 @@
-import e from "express";
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 import { employeeModelType } from "../db/mongoose/models/employee-model";
-import { modelsTypes } from "../models";
 import {
   EmployeeType,
   EmployeeCreateType,
   EmployeeUniqueProperty,
 } from "./interfaces";
-
 export interface IEmployeeRepository {
   create: (employee: EmployeeCreateType) => Promise<EmployeeType>;
   getAll: () => Promise<EmployeeType[]>;
@@ -17,55 +14,65 @@ export interface IEmployeeRepository {
   ) => Promise<EmployeeType | undefined>;
 }
 
+// export type mongooseDocumentResponse<T> = Document<unknown, any, T> &
+//   T & { _id: mongoose.Types.ObjectId };
+
+// export interface IMongoDbAdapterMapper<T, K> {
+//   // mapDomainToDAO: (domainObject: T) => Promise<Model<T>>;
+//   mapDAOToDomain: (
+//     DAO: Document<unknown, any, T> & T & { _id: mongoose.Types.ObjectId }
+//   ) => Promise<K>;
+// }
+
+// class MongoDbAdapterMapper<T, K> implements IMongoDbAdapterMapper<T, K> {
+//   // async mapDomainToDAO(domainObject: T):Promise<mongoose.Model<T, {}, {}, {}, any>>{}
+//   async mapDAOToDomain(
+//     DAO: Document<unknown, any, T> & T & { _id: mongoose.Types.ObjectId }
+//   ): Promise<K> {
+//     const plainObject = DAO.toObject({ versionKey: false });
+//     console.log(plainObject);
+//     return plainObject as K;
+//   }
+// }
+
 class EmployeeRepository implements IEmployeeRepository {
   private readonly employees: EmployeeType[] = [];
   private employee: employeeModelType;
 
-  constructor({ employee }: modelsTypes) {
+  constructor({ employee }: { employee: employeeModelType }) {
     this.employee = employee;
   }
 
   async create(employeeCreate: EmployeeCreateType): Promise<EmployeeType> {
     const newEmployee = await this.employee.create(employeeCreate);
-    const employeeResponse = newEmployee.toObject({
-      transform: function (doc, ret, options) {
-        (ret.id = ret._id.toString()), delete ret._id;
-      },
-      versionKey: false,
-    }) as EmployeeType;
-
-    return employeeResponse;
+    return this.mapToDomain(newEmployee);
   }
 
   async getAll() {
-    const allEmployees = await this.employee
-      .find()
-      .lean()
-      .transform((docs) => {
-        return docs.map((doc) => {
-          return {
-            id: doc._id.toString(),
-            name: doc.name,
-            surname: doc.surname,
-            githubAccount: doc.githubAccount,
-            employmentType: doc.employmentType,
-          };
-        });
-      });
-    console.log(allEmployees);
-    console.log(typeof allEmployees);
-    console.log(allEmployees[0] instanceof mongoose.Document);
-
-    return this.employees;
+    const allEmployees = await this.employee.find();
+    return allEmployees.map((employee) => this.mapToDomain(employee));
   }
 
   async findUnique(
     uniqueProperty: EmployeeUniqueProperty,
     value: number | string
   ) {
-    return this.employees.find(
-      (employee) => employee[uniqueProperty] === value
-    );
+    const employee = await this.employee.findOne({ [uniqueProperty]: value });
+    if (!employee) {
+      return undefined;
+    }
+    return this.mapToDomain(employee);
+  }
+
+  private mapToDomain(
+    DAO: mongoose.Document<unknown, any, EmployeeCreateType> &
+      EmployeeCreateType & {
+        _id: mongoose.Types.ObjectId;
+      }
+  ): EmployeeType {
+    const plainObject = DAO.toObject({ versionKey: false });
+    const { _id, ...domainObject } = plainObject;
+    return { ...domainObject, id: _id.toString() };
   }
 }
 
