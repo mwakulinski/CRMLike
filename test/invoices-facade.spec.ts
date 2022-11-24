@@ -53,7 +53,7 @@ describe("invoice facade ", () => {
 
   describe("uploadNewInvoice", () => {
     it("should call method uploadFile once", async () => {
-      const spyUploadFile = chai.spy.on(uploaderService, "uploadFile");
+      const spyUploadFile = chai.spy.on(uploaderService, "upload");
       await mockInvoiceFacade.uploadNewInvoice(mockInvoiceToUpload);
       expect(spyUploadFile).to.have.been.called.once;
     });
