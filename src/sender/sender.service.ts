@@ -1,11 +1,11 @@
-import { IInvoice } from "../interfaces/invoice.interface";
+import { InvoiceType } from "../interfaces/invoice.interface";
 
 export interface ISenderService {
-  informAboutNewInvoice: (invoice: IInvoice) => Promise<void>;
+  informAboutNewInvoice: (invoice: InvoiceType) => Promise<void>;
 }
 
 class SenderService implements ISenderService {
-  async informAboutNewInvoice(invoice: IInvoice) {
+  async informAboutNewInvoice(invoice: InvoiceType) {
     console.log(
       `New invoice from: ${invoice.owner} has been issued.\nAmount to pay: ${
         invoice.amountDue

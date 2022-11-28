@@ -1,33 +1,33 @@
 import {
-  IInvoiceToUpload,
-  InvoiceKey,
-  InvoiceValue,
+  InvoiceUploadType,
+  InvoiceKeys,
+  InvoiceValues,
 } from "../interfaces/invoice.interface";
 
 export type ISaveNewInvoiceInformationResponse = { invoiceId: number };
 
 export interface IInvoicesRepository {
   createNewInvoiceInformation: (
-    invoice: IInvoiceToUpload
+    invoice: InvoiceUploadType
   ) => Promise<ISaveNewInvoiceInformationResponse>;
 
   findInvoiceInformation: (
     invoiceId: number
-  ) => Promise<IInvoiceToUpload | undefined>;
+  ) => Promise<InvoiceUploadType | undefined>;
 
   filterInvoicesByProperty: (
-    propertyKey: InvoiceKey,
-    propertyValue: InvoiceValue
-  ) => Promise<IInvoiceToUpload[]>;
+    propertyKey: InvoiceKeys,
+    propertyValue: InvoiceValues
+  ) => Promise<InvoiceUploadType[]>;
 
   deleteInvoice: (invoiceId: number) => Promise<void>;
 }
 
 export class InvoiceRepository implements IInvoicesRepository {
-  private invoices: IInvoiceToUpload[] = [];
+  private invoices: InvoiceUploadType[] = [];
   private counter = 0;
 
-  async createNewInvoiceInformation(invoice: IInvoiceToUpload) {
+  async createNewInvoiceInformation(invoice: InvoiceUploadType) {
     invoice.details.id = this.counter;
     this.invoices.push(invoice);
     this.counter++;
@@ -39,8 +39,8 @@ export class InvoiceRepository implements IInvoicesRepository {
   }
 
   async filterInvoicesByProperty(
-    propertyKey: InvoiceKey,
-    propertyValue: InvoiceValue
+    propertyKey: InvoiceKeys,
+    propertyValue: InvoiceValues
   ) {
     return this.invoices.filter(
       (invoice) => invoice.details[propertyKey] === propertyValue
