@@ -1,13 +1,17 @@
 import EmployeeService, {
   IEmployeeService,
 } from "../src/employee/employee.service";
-import EmployeeRepository from "../src/employee/employee.repository";
+import { IEmployeeRepository } from "../src/employee/employee.repository";
 import { expect } from "chai";
 import { beforeEach } from "mocha";
 import InvoiceRepository from "../src/invoices/invoices.repository";
 import { rejects } from "assert";
 import { IRepositories } from "../src/repositories";
-import { EmployeeCreateType } from "../src/employee/interfaces";
+import {
+  EmployeeCreateType,
+  EmployeeType,
+  EmployeeUniqueProperty,
+} from "../src/employee/interfaces";
 
 const mockUser_1: EmployeeCreateType = {
   name: "Maria",
@@ -15,6 +19,7 @@ const mockUser_1: EmployeeCreateType = {
   githubAccount: "MAExp",
   employmentType: "B2B",
 };
+
 const mockUser_2: EmployeeCreateType = {
   name: "Michal",
   surname: "Wak",
@@ -24,11 +29,38 @@ const mockUser_2: EmployeeCreateType = {
 describe("EmployeeService", () => {
   let mockEmployeeService: IEmployeeService;
   let mockRepositories: IRepositories;
+  let mockEmployeeRepository: IEmployeeRepository;
+  class MockEmployeeRepository implements IEmployeeRepository {
+    private db: EmployeeType[] = [];
+    private id = "a";
+    async create(employeeCreate: EmployeeCreateType) {
+      const newEmployee = { id: this.id, ...employeeCreate };
+      this.db.push(newEmployee);
+      this.id += "a";
+      return newEmployee;
+    }
+    async getAll() {
+      return this.db;
+    }
+    async findUnique(
+      uniqueProperty: EmployeeUniqueProperty,
+      value: number | string
+    ) {
+      const employee = this.db.find(
+        (employee) => employee[uniqueProperty] === value
+      );
+      if (!employee) {
+        return undefined;
+      }
+      return employee;
+    }
+  }
 
   beforeEach(() => {
+    mockEmployeeRepository = new MockEmployeeRepository();
     mockRepositories = {
       invoicesRepository: new InvoiceRepository(),
-      employeeRepository: new EmployeeRepository(),
+      employeeRepository: mockEmployeeRepository,
     };
     mockEmployeeService = new EmployeeService(mockRepositories);
   });
@@ -36,7 +68,7 @@ describe("EmployeeService", () => {
   describe("create Employee", () => {
     it("should return created employee with id", async () => {
       expect(await mockEmployeeService.create(mockUser_1)).to.deep.equal({
-        id: 0,
+        id: "a",
         ...mockUser_1,
       });
     });
@@ -60,11 +92,11 @@ describe("EmployeeService", () => {
 
       expect(await mockEmployeeService.getAll()).to.deep.equal([
         {
-          id: 0,
+          id: "a",
           ...mockUser_1,
         },
         {
-          id: 1,
+          id: "aa",
           ...mockUser_2,
         },
       ]);
@@ -77,14 +109,14 @@ describe("EmployeeService", () => {
       await mockRepositories.employeeRepository.create(mockUser_1);
       //When
       //Then
-      expect(await mockEmployeeService.getById(0)).to.deep.equal({
-        id: 0,
+      expect(await mockEmployeeService.getById("a")).to.deep.equal({
+        id: "a",
         ...mockUser_1,
       });
     });
 
     it("should return undefined when no employee with provided id", async () => {
-      expect(await mockEmployeeService.getById(1)).to.equal(undefined);
+      expect(await mockEmployeeService.getById("a")).to.equal(undefined);
     });
   });
 });
