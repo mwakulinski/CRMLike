@@ -35,7 +35,7 @@ class EmployeeController implements IController {
 
   getById = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const employee = await this.employeeServices.getById(Number(id));
+    const employee = await this.employeeServices.getById(id);
     return res.status(200).json(employee);
   };
 
