@@ -85,18 +85,22 @@ describe("EmployeeService", () => {
   describe("getAll", () => {
     it("should return all employees", async () => {
       //Given two employees in a database
-      await mockRepositories.employeeRepository.create(mockUser_1);
-      await mockRepositories.employeeRepository.create(mockUser_2);
+      const mockEmployee1 = await mockRepositories.employeeRepository.create(
+        mockUser_1
+      );
+      const mockEmployee2 = await mockRepositories.employeeRepository.create(
+        mockUser_2
+      );
       //when
       //Then all two employees should be returned
 
       expect(await mockEmployeeService.getAll()).to.deep.equal([
         {
-          id: "a",
+          id: mockEmployee1.id,
           ...mockUser_1,
         },
         {
-          id: "aa",
+          id: mockEmployee2.id,
           ...mockUser_2,
         },
       ]);
