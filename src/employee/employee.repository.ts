@@ -36,7 +36,6 @@ export interface IEmployeeRepository {
 // }
 
 class EmployeeRepository implements IEmployeeRepository {
-  private readonly employees: EmployeeType[] = [];
   private employee: employeeModelType;
 
   constructor({ employee }: { employee: employeeModelType }) {
