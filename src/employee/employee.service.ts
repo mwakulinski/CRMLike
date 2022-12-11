@@ -10,7 +10,11 @@ export interface IEmployeeService {
 
 class EmployeeService implements IEmployeeService {
   private readonly employeeRepository: IEmployeeRepository;
-  constructor({ employeeRepository }: IRepositories) {
+  constructor({
+    employeeRepository,
+  }: {
+    employeeRepository: IEmployeeRepository;
+  }) {
     this.employeeRepository = employeeRepository;
   }
 
