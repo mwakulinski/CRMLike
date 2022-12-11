@@ -3,6 +3,7 @@ import { ISenderService } from "../sender/sender.service";
 import { IFilesUploaderService } from "../uploader/uploader.service";
 import { IInvoicesRepository } from "./invoices.repository";
 import { ISaveNewInvoiceInformationResponse } from "./invoices.repository";
+
 export interface IInvoiceFacade {
   uploadNewInvoice: (invoiceToUpload: IInvoiceToUpload) => Promise<number>;
 }

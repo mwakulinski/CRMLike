@@ -24,6 +24,7 @@ class EmployeeRepository implements IEmployeeRepository {
     return newEmployee;
   }
 
+
   async getAll() {
     return this.employees;
   }

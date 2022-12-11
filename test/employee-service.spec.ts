@@ -42,8 +42,8 @@ describe("EmployeeService", () => {
     });
 
     it("should throw error when employee with given githubAccount already exist", async () => {
+    
       await mockEmployeeService.create(mockUser_1);
-
       await rejects(async () => {
         await mockEmployeeService.create(mockUser_1);
       });
