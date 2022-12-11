@@ -12,6 +12,6 @@ export interface IRepositories {
 }
 
 export const repositories: IRepositories = {
-  invoicesRepository: new InvoiceRepository(),
+  invoicesRepository: new InvoiceRepository(models),
   employeeRepository: new EmployeeRepository(models),
 };
