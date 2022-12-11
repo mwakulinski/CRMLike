@@ -28,7 +28,6 @@ const mockUser_2: EmployeeCreateType = {
 };
 describe("EmployeeService", () => {
   let mockEmployeeService: IEmployeeService;
-  let mockRepositories: IRepositories;
   let mockEmployeeRepository: IEmployeeRepository;
   class MockEmployeeRepository implements IEmployeeRepository {
     private db: EmployeeType[] = [];
@@ -58,11 +57,9 @@ describe("EmployeeService", () => {
 
   beforeEach(() => {
     mockEmployeeRepository = new MockEmployeeRepository();
-    mockRepositories = {
-      invoicesRepository: new InvoiceRepository(),
+    mockEmployeeService = new EmployeeService({
       employeeRepository: mockEmployeeRepository,
-    };
-    mockEmployeeService = new EmployeeService(mockRepositories);
+    });
   });
 
   describe("create Employee", () => {
@@ -85,12 +82,8 @@ describe("EmployeeService", () => {
   describe("getAll", () => {
     it("should return all employees", async () => {
       //Given two employees in a database
-      const mockEmployee1 = await mockRepositories.employeeRepository.create(
-        mockUser_1
-      );
-      const mockEmployee2 = await mockRepositories.employeeRepository.create(
-        mockUser_2
-      );
+      const mockEmployee1 = await mockEmployeeRepository.create(mockUser_1);
+      const mockEmployee2 = await mockEmployeeRepository.create(mockUser_2);
       //when
       //Then all two employees should be returned
 
@@ -110,7 +103,7 @@ describe("EmployeeService", () => {
   describe("getById", () => {
     it("should return unique employee when employee id is passed", async () => {
       //Given employee in a database
-      await mockRepositories.employeeRepository.create(mockUser_1);
+      await mockEmployeeRepository.create(mockUser_1);
       //When
       //Then
       expect(await mockEmployeeService.getById("a")).to.deep.equal({
