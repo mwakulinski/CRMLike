@@ -1,5 +1,5 @@
 export type InvoiceType = {
-  id?: number;
+  id?: string;
   owner: string;
   amountDue: number;
   dueDate: Date;
@@ -7,7 +7,14 @@ export type InvoiceType = {
   subject: string;
 };
 
-export type InvoiceUploadType = {
+export type InvoiceToUploadType = {
+  fileUrl: string;
+  uploadTo: string;
+  details: InvoiceType;
+};
+
+export type InvoiceUploadedType = {
+  id: string;
   fileUrl: string;
   uploadTo: string;
   details: InvoiceType;
