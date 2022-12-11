@@ -1,6 +1,7 @@
 import {
   IInvoicesRepository,
   InvoiceRepository,
+  ISaveNewInvoiceInformationResponse,
 } from "../src/invoices/invoices.repository";
 import FilesUploaderService, {
   IFilesUploaderService,
@@ -11,6 +12,12 @@ import { beforeEach } from "mocha";
 import { expect } from "chai";
 import chai from "chai";
 import spies from "chai-spies";
+import {
+  InvoiceToUploadType,
+  InvoiceUploadedType,
+  InvoiceType,
+  InvoiceValues,
+} from "../src/interfaces/invoice.interface";
 
 chai.use(spies);
 
@@ -20,6 +27,44 @@ describe("invoice facade ", () => {
 
   let mockInvoiceFacade: IInvoiceFacade;
   let mockInvoiceRepository: IInvoicesRepository;
+
+  class MockInvoiceRepository implements IInvoicesRepository {
+    private invoices: InvoiceUploadedType[] = [];
+    private counter = "";
+
+    async createNewInvoiceInformation(
+      invoice: InvoiceToUploadType
+    ): Promise<InvoiceUploadedType> {
+      this.counter += "a";
+      const uploadedInvoice = { ...invoice, id: this.counter };
+      this.invoices.push(uploadedInvoice);
+      return uploadedInvoice;
+    }
+    async findInvoiceInformation(
+      invoiceId: string
+    ): Promise<InvoiceUploadedType | null> {
+      const foundInvoice = this.invoices.find(
+        (invoice) => invoice.id === invoiceId
+      );
+      if (!foundInvoice) return null;
+      return foundInvoice;
+    }
+
+    async filterInvoicesByProperty(
+      propertyKey: keyof InvoiceType,
+      propertyValue: InvoiceValues
+    ): Promise<InvoiceUploadedType[]> {
+      return this.invoices.filter(
+        (invoice) => invoice.details[propertyKey] === propertyValue
+      );
+    }
+
+    async deleteInvoice(invoiceId: string): Promise<void> {
+      this.invoices = this.invoices.filter(
+        (invoice) => invoice.id !== invoiceId
+      );
+    }
+  }
 
   const mockInvoice = {
     amountDue: 200,
@@ -41,7 +86,7 @@ describe("invoice facade ", () => {
   });
 
   beforeEach(() => {
-    mockInvoiceRepository = new InvoiceRepository();
+    mockInvoiceRepository = new MockInvoiceRepository();
     mockInvoiceFacade = new InvoiceFacade(
       {
         senderService: senderService,
@@ -68,17 +113,9 @@ describe("invoice facade ", () => {
     });
 
     it("should return id of created invoice", async () => {
-      chai.spy.on(
-        mockInvoiceRepository,
-        "createNewInvoiceInformation",
-        async () => {
-          return { invoiceId: 1 };
-        }
-      );
-
       expect(
         await mockInvoiceFacade.uploadNewInvoice(mockInvoiceToUpload)
-      ).to.equal(1);
+      ).to.equal("a");
     });
 
     it("should call method informAboutNewInvoice once", async () => {
