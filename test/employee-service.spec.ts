@@ -33,34 +33,32 @@ describe("EmployeeService", () => {
     mockEmployeeService = new EmployeeService(mockRepositories);
   });
 
-  describe("createEmployee", () => {
+  describe("create Employee", () => {
     it("should return created employee with id", async () => {
-      expect(
-        await mockEmployeeService.createEmployee(mockUser_1)
-      ).to.deep.equal({
+      expect(await mockEmployeeService.create(mockUser_1)).to.deep.equal({
         id: 0,
         ...mockUser_1,
       });
     });
 
     it("should throw error when employee with given githubAccount already exist", async () => {
-      await mockEmployeeService.createEmployee(mockUser_1);
-
+    
+      await mockEmployeeService.create(mockUser_1);
       await rejects(async () => {
-        await mockEmployeeService.createEmployee(mockUser_1);
+        await mockEmployeeService.create(mockUser_1);
       });
     });
   });
 
-  describe("getAllEmployees", () => {
+  describe("getAll", () => {
     it("should return all employees", async () => {
       //Given two employees in a database
-      await mockRepositories.employeeRepository.createEmployee(mockUser_1);
-      await mockRepositories.employeeRepository.createEmployee(mockUser_2);
+      await mockRepositories.employeeRepository.create(mockUser_1);
+      await mockRepositories.employeeRepository.create(mockUser_2);
       //when
       //Then all two employees should be returned
 
-      expect(await mockEmployeeService.getAllEmployees()).to.deep.equal([
+      expect(await mockEmployeeService.getAll()).to.deep.equal([
         {
           id: 0,
           ...mockUser_1,
@@ -73,20 +71,20 @@ describe("EmployeeService", () => {
     });
   });
 
-  describe("getEmployeeById", () => {
+  describe("getById", () => {
     it("should return unique employee when employee id is passed", async () => {
       //Given employee in a database
-      await mockRepositories.employeeRepository.createEmployee(mockUser_1);
+      await mockRepositories.employeeRepository.create(mockUser_1);
       //When
       //Then
-      expect(await mockEmployeeService.getEmployeeById(0)).to.deep.equal({
+      expect(await mockEmployeeService.getById(0)).to.deep.equal({
         id: 0,
         ...mockUser_1,
       });
     });
 
     it("should return undefined when no employee with provided id", async () => {
-      expect(await mockEmployeeService.getEmployeeById(1)).to.equal(undefined);
+      expect(await mockEmployeeService.getById(1)).to.equal(undefined);
     });
   });
 });
