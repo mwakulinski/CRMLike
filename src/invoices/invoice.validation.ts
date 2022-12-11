@@ -1,10 +1,10 @@
 import Joi from "joi";
 import {
   InvoiceType,
-  InvoiceUploadType,
+  InvoiceToUploadType,
 } from "../interfaces/invoice.interface";
 
-const invoiceSave: Joi.ObjectSchema<InvoiceUploadType> = Joi.object({
+const invoiceSave: Joi.ObjectSchema<InvoiceToUploadType> = Joi.object({
   fileUrl: Joi.string().required(),
   uploadTo: Joi.string().required(),
   details: Joi.object<InvoiceType>({
