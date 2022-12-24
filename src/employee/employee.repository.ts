@@ -5,6 +5,7 @@ import {
   EmployeeCreateType,
   EmployeeUniqueProperty,
 } from "./interfaces";
+
 export interface IEmployeeRepository {
   create: (employee: EmployeeCreateType) => Promise<EmployeeType>;
   getAll: () => Promise<EmployeeType[]>;

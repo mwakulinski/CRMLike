@@ -19,7 +19,6 @@ const mockUser_1: EmployeeCreateType = {
   githubAccount: "MAExp",
   employmentType: "B2B",
 };
-
 const mockUser_2: EmployeeCreateType = {
   name: "Michal",
   surname: "Wak",
