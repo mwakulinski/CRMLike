@@ -28,6 +28,7 @@ export interface IInvoicesRepository {
 
 export class InvoiceRepository implements IInvoicesRepository {
   private readonly invoice: invoiceToUploadModelType;
+
   constructor({ invoice }: { invoice: invoiceToUploadModelType }) {
     this.invoice = invoice;
   }
