@@ -1,5 +1,5 @@
-export type IInvoice = {
-  id?: number;
+export type InvoiceType = {
+  id?: string;
   owner: string;
   amountDue: number;
   dueDate: Date;
@@ -7,11 +7,18 @@ export type IInvoice = {
   subject: string;
 };
 
-export type IInvoiceToUpload = {
+export type InvoiceToUploadType = {
   fileUrl: string;
   uploadTo: string;
-  details: IInvoice;
+  details: InvoiceType;
 };
 
-export type InvoiceKey = keyof IInvoice;
-export type InvoiceValue = IInvoice[keyof IInvoice];
+export type InvoiceUploadedType = {
+  id: string;
+  fileUrl: string;
+  uploadTo: string;
+  details: InvoiceType;
+};
+
+export type InvoiceKeys = keyof InvoiceType;
+export type InvoiceValues = InvoiceType[keyof InvoiceType];

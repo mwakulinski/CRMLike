@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
 import validate from "./invoice.validation";
-import { IInvoiceToUpload } from "../interfaces/invoice.interface";
+import { InvoiceToUploadType } from "../interfaces/invoice.interface";
 import { IInvoiceFacade } from "./invoice.facade";
 import { IFacades } from "../facades";
 
@@ -30,7 +30,8 @@ class InvoicesController implements IController {
     res: Response,
     next: NextFunction
   ) => {
-    const invoiceToUpload: IInvoiceToUpload = req.body;
+    const invoiceToUpload: InvoiceToUploadType = req.body;
+
     const invoiceId = await this.invoiceFacade.uploadNewInvoice(
       invoiceToUpload
     );
