@@ -7,7 +7,8 @@
     "serve": "node ./dist/src/main",
     "dev": "nodemon --config nodemon.json ./src/index.ts",
     "build": "tsc",
-    "test-mocha": "mocha --require ts-node/register test/**/*.spec.ts"
+    "test-mocha": "mocha --require ts-node/register test/**/*.spec.ts",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.13",
     "eslint": "^8.23.0",
+    "husky": "^8.0.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
     "ts-mocha": "^10.0.0",
