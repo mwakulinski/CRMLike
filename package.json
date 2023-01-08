@@ -8,7 +8,8 @@
     "dev": "nodemon --config nodemon.json ./src/index.ts",
     "build": "tsc",
     "test-mocha": "mocha --require ts-node/register test/**/*.spec.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,9 @@
     "@types/mocha": "^10.0.0",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.13",
-    "eslint": "^8.23.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "eslint": "^8.31.0",
     "husky": "^8.0.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
