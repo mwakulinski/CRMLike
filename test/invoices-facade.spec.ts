@@ -8,8 +8,8 @@ import SenderService, { ISenderService } from "../src/sender/sender.service";
 import InvoiceFacade, { IInvoiceFacade } from "../src/invoices/invoice.facade";
 import { beforeEach } from "mocha";
 import { expect } from "chai";
-import chai from "chai";
-import spies from "chai-spies";
+import chai = require("chai");
+import spies = require("chai-spies");
 import {
   InvoiceToUploadType,
   InvoiceUploadedType,
