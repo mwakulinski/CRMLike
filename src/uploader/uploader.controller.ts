@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 import { IController } from "../interfaces/controller.interface";
 import { IFileToUpload } from "../interfaces/file.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
@@ -24,7 +24,7 @@ class FilesUploaderController implements IController {
     );
   }
 
-  upload = async (req: Request, res: Response, next: NextFunction) => {
+  upload = async (req: Request, res: Response) => {
     const fileToUploadParams: IFileToUpload = req.body;
     const response = await this.filesUploaderService.upload(fileToUploadParams);
     return res.status(201).send(response);

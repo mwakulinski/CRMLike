@@ -1,6 +1,5 @@
 import { IEmployeeRepository } from "./employee.repository";
 import { EmployeeType, EmployeeCreateType } from "./interfaces";
-import { IRepositories } from "../repositories";
 
 export interface IEmployeeService {
   create: (employee: EmployeeCreateType) => Promise<EmployeeType>;

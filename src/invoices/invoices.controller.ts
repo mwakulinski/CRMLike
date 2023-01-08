@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from "express";
+import { Request, Response, Router } from "express";
 import { IController } from "../interfaces/controller.interface";
 import validationMiddleware from "../middlewares/validation.middleware";
 import validate from "./invoice.validation";
@@ -28,7 +28,6 @@ class InvoicesController implements IController {
   private uploadNewInvoice = async (
     req: Request,
     res: Response,
-    next: NextFunction
   ) => {
     const invoiceToUpload: InvoiceToUploadType = req.body;
 

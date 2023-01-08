@@ -1,7 +1,5 @@
 import {
   IInvoicesRepository,
-  InvoiceRepository,
-  ISaveNewInvoiceInformationResponse,
 } from "../src/invoices/invoices.repository";
 import FilesUploaderService, {
   IFilesUploaderService,

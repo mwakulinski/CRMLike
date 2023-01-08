@@ -4,9 +4,7 @@ import EmployeeService, {
 import { IEmployeeRepository } from "../src/employee/employee.repository";
 import { expect } from "chai";
 import { beforeEach } from "mocha";
-import InvoiceRepository from "../src/invoices/invoices.repository";
 import { rejects } from "assert";
-import { IRepositories } from "../src/repositories";
 import {
   EmployeeCreateType,
   EmployeeType,
